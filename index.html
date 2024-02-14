@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>calculadora de serviços</title>
+</head>
+<body> 
+    <header>
+        <h2> Calculadora de Serviços</h2>
+    </header>
+
+    <label for="custoProduto">Custo do Produto: </label>
+    <input type="number" id="custoProduto" placeholder="Insira o custo do produto" />
+
+    <label for="margemLucro">Margem de Lucro Desejada:</label>
+    <input type="number" id="margemLucro" placeholder="Insira a margem de lucro" />
+
+    <button class="calcularSalvar" onclick="calcularPrecoESalvar()">Calcular e Salvar </button> 
+
+    <p id="resultado"></p>
+
+    <script>
+        function 
+        calcularValorDoServico(custoDoProduto,margemDeLucro) {
+            const precoDoServico =
+            (custoDoProduto * (1 + margemDeLucro / 100)).toFixed(2);
+            return parseFloat(precoDoServico);
+        }
+          
+          function calcularMargemDeLucro(custoDoProduto,precoDoServico) {
+            const margemDeLucro = ((precoDoServico - custoDoProduto) / custoDoProduto * 100).toFixed(2);
+            return parseFloat(margemDeLucro);
+            
+          }
+
+
+
+        function calcularPrecoESalvar() {
+            const custoDoProdutoInput = document.getElementById("custoProduto");
+            const margemDeLucroInput = document.getElementById("margemLucro");
+            const resultadoElement = document.getElementById("resultado");
+
+            if (!custoDoProdutoInput || ! margemDeLucroInput || !resultadoElement) {
+                console.error("Elemento não encontrado.");
+                return;
+            }
+          
+            const custoDoProduto = parseFloat(custoDoProdutoInput.value);
+            const margemDeLucro = parseFloat(margemDeLucroInput.value);
+
+            if (isNaN(custoDoProduto) || custoDoProduto <= 0 || isNaN(margemDeLucro))  {
+                alert("Por Favor, insira valores validos parao custo do produto e margem de lucro.");
+                return;
+            }
+
+            const precoDoServico = calcularValorDoServico(custoDoProduto,margemDeLucro);
+            const novaMargemDeLucro = calcularMargemDeLucro(custoDoProduto,precoDoServico);
+
+            resultadoElement.innerHTML  =`
+            custo do Produto: R$${custoDoProduto} <br>
+            margem de Lucro Desejada: ${margemDeLucro}% <br>
+            Preço do Serviço: R$${precoDoServico} <br>
+            Nova Margem de Lucro: ${novaMargemDeLucro}%
+            `;
+        }
+         
+        document.addEventListener("DOMcontentLoaded", function () {
+            // o codigo dentro desta função sera executado apos o carregamento completo da pagina.
+        });
+
+    </script>
+
+</body>
+</html>
